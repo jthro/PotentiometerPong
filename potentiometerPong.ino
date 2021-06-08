@@ -78,9 +78,9 @@ void loop() {
   }
 
   if (analogRead(2) < 511) {
-    playerTwoPos[1] = 1;
-  } else {
     playerTwoPos[1] = 0;
+  } else {
+    playerTwoPos[1] = 1;
   }
 
   if ((playerOnePos[0] == ballPos[0] && playerOnePos[1] == ballPos[1]) || (playerTwoPos[0] == ballPos[0] && playerTwoPos[1] == ballPos[1])) {
