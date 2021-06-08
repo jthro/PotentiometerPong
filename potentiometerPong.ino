@@ -18,7 +18,6 @@ void reset() {
   ballMod = false;
   ballDirection = 1;
   render();
-  delay(1000);
 }
 
 void render() {
@@ -42,6 +41,21 @@ void setup() {
   playerTwoPos[1] = 0;
   Serial.begin(9600);
   reset();
+  lcd.setCursor(3, 1);
+  lcd.print("1");
+  lcd.setCursor(2, 1);
+  lcd.print("P");
+  lcd.setCursor(12, 1);
+  lcd.print("2");
+  lcd.setCursor(11, 1);
+  lcd.print("P");
+  lcd.setCursor(6, 0);
+  lcd.print("p");
+  lcd.setCursor(8, 0);
+  lcd.print("n");
+  lcd.setCursor(9, 0);
+  lcd.print("g");
+  delay(1500);
 }
 
 void displayScore() {
@@ -71,9 +85,16 @@ void loop() {
 
   if ((playerOnePos[0] == ballPos[0] && playerOnePos[1] == ballPos[1]) || (playerTwoPos[0] == ballPos[0] && playerTwoPos[1] == ballPos[1])) {
     ballDirection = -ballDirection;
-    if (randModifier == 0) {
-      ballMod = true;
+    randModifier = random(0, 4);
+  }
+
+  if (randModifier == 3) {
+    if (ballPos[1] == 0) {
+      ballPos[1] = 1;
+    } else if(ballPos[1] == 1) {
+      ballPos[1] = 0;
     }
+    randModifier = 0;
   }
 
   if (ballPos[0] < 0) {
@@ -86,18 +107,8 @@ void loop() {
   }
 
   ballPos[0] += ballDirection;
-
-  if ((ballPos[0] > 6 && ballPos[0] < 9) && ballMod == true) {
-    if (ballPos[1] == 0) {
-      ballPos[1] = 1;
-    } else {
-      ballPos[1] == 0;
-    }
-    ballMod = false;
-  }
   
   render();
   delay(42);
   lcd.clear();
-  randModifier = random(0, 2);
 }
