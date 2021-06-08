@@ -1,5 +1,5 @@
 # PotentiometerPong
-###Arduino project - bad 2x16 pong knockoff for arduino lcd screen
+### Arduino project - bad 2x16 pong knockoff for arduino lcd screen
 
 You will need:
 - One Arduino Uno or equivalent <br>
