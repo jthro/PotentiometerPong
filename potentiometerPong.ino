@@ -72,15 +72,15 @@ void displayScore() {
 void loop() {
   // put your main code here, to run repeatedly:
   if (analogRead(1) < 511) {
-    playerOnePos[1] = 0;
-  } else {
     playerOnePos[1] = 1;
+  } else {
+    playerOnePos[1] = 0;
   }
 
   if (analogRead(2) < 511) {
-    playerTwoPos[1] = 0;
-  } else {
     playerTwoPos[1] = 1;
+  } else {
+    playerTwoPos[1] = 0;
   }
 
   if ((playerOnePos[0] == ballPos[0] && playerOnePos[1] == ballPos[1]) || (playerTwoPos[0] == ballPos[0] && playerTwoPos[1] == ballPos[1])) {
