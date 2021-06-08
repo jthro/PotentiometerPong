@@ -7,20 +7,52 @@ int playerOnePos[2];
 int playerTwoPos[2];
 int ballPos[2];
 int randModifier;
+int playerOneScore = 0;
+int playerTwoScore = 0;
 
 
-void setup() {
-  // put your setup code here, to run once:
+void reset() {
   lcd.begin(16, 2);
-  playerOnePos[0] = 1;
-  playerOnePos[1] = 0;
-  playerTwoPos[0] = 15;
-  playerTwoPos[1] = 0;
   ballPos[0] = 7;
   ballPos[1] = 0;
   ballMod = false;
   ballDirection = 1;
+  render();
+  delay(1000);
+}
 
+void render() {
+  if (ballPos[0] > 7){
+    lcd.setCursor(ballPos[0] - 1, ballPos[1]);
+  } else {
+    lcd.setCursor(ballPos[0], ballPos[1]);
+  }
+  lcd.write('o');
+  lcd.setCursor(1, playerOnePos[1]);
+  lcd.write('|');
+  lcd.setCursor(14, playerTwoPos[1]);
+  lcd.write('|');
+}
+
+void setup() {
+  // put your setup code here, to run once:  
+  playerOnePos[0] = 1;
+  playerOnePos[1] = 0;
+  playerTwoPos[0] = 15;
+  playerTwoPos[1] = 0;
+  Serial.begin(9600);
+  reset();
+}
+
+void displayScore() {
+  Serial.print("Player one score: ");
+  Serial.print("\t");
+  Serial.print(playerOneScore);
+  Serial.print("\t");
+  Serial.print("Player two score: ");
+  Serial.print("\t");
+  Serial.print(playerTwoScore);
+  Serial.println();
 }
 
 void loop() {
@@ -44,13 +76,18 @@ void loop() {
     }
   }
 
-  if (ballPos[0] < 0 || ballPos[0] > 15) {
-    setup();
+  if (ballPos[0] < 0) {
+    displayScore();
+    reset();
+  } else if(ballPos[0] > 15) {
+    playerOneScore +=1;
+    displayScore();
+    reset();
   }
 
   ballPos[0] += ballDirection;
 
-  if (ballPos[0] == 7 && ballMod == true) {
+  if ((ballPos[0] > 6 && ballPos[0] < 9) && ballMod == true) {
     if (ballPos[1] == 0) {
       ballPos[1] = 1;
     } else {
@@ -58,17 +95,8 @@ void loop() {
     }
     ballMod = false;
   }
-  if (ballPos[0] > 7){
-    lcd.setCursor(ballPos[0] - 1, ballPos[1]);
-  } else {
-    lcd.setCursor(ballPos[0], ballPos[1]);
-  }
-  lcd.write('o');
-  lcd.setCursor(1, playerOnePos[1]);
-  lcd.write('|');
-  lcd.setCursor(14, playerTwoPos[1]);
-  lcd.write('|');
-
+  
+  render();
   delay(42);
   lcd.clear();
   randModifier = random(0, 2);
