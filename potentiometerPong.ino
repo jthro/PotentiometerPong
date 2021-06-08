@@ -18,6 +18,7 @@ void reset() {
   ballMod = false;
   ballDirection = 1;
   render();
+  delay(1000);
 }
 
 void render() {
