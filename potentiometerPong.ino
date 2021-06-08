@@ -98,10 +98,11 @@ void loop() {
   }
 
   if (ballPos[0] < 0) {
+    playerTwoScore += 1;
     displayScore();
     reset();
   } else if(ballPos[0] > 15) {
-    playerOneScore +=1;
+    playerOneScore += 1;
     displayScore();
     reset();
   }
